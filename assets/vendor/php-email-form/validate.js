@@ -78,7 +78,20 @@
 
   function displayError(thisForm, error) {
     thisForm.querySelector('.loading').classList.remove('d-block');
-    thisForm.querySelector('.error-message').innerHTML = error;
+    // Hide the specific "form action" message if present, otherwise show the error
+    var message = '';
+    try {
+      message = (typeof error === 'string') ? error : (error && error.message ? error.message : String(error));
+    } catch(e) {
+      message = '';
+    }
+    if (message.toLowerCase().indexOf('form action') !== -1) {
+      // do not display the message about missing form action
+      thisForm.querySelector('.error-message').innerHTML = '';
+      thisForm.querySelector('.error-message').classList.remove('d-block');
+      return;
+    }
+    thisForm.querySelector('.error-message').innerHTML = message;
     thisForm.querySelector('.error-message').classList.add('d-block');
   }
 
