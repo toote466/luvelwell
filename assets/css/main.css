@@ -296,6 +296,30 @@ height: auto;
   }
 }
 
+/* PHP Email Form Success Toast/Banner */
+.php-email-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #059652;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  font-weight: 600;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+}
+.php-email-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
 /*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/

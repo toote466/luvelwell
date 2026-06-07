@@ -65,7 +65,11 @@
     .then(data => {
       thisForm.querySelector('.loading').classList.remove('d-block');
       if (data.trim() == 'OK') {
-        thisForm.querySelector('.sent-message').classList.add('d-block');
+        var sent = thisForm.querySelector('.sent-message');
+        if (sent) {
+          sent.classList.remove('d-block');
+        }
+        showSuccessBanner('¡Tu mensaje ha sido enviado correctamente! Pronto nos contactaremos contigo.');
         thisForm.reset(); 
       } else {
         throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
@@ -93,6 +97,35 @@
     }
     thisForm.querySelector('.error-message').innerHTML = message;
     thisForm.querySelector('.error-message').classList.add('d-block');
+  }
+
+  // Show a temporary toast/banner for successful submissions
+  function showSuccessBanner(message) {
+    try {
+      var id = 'php-email-toast';
+      var el = document.getElementById(id);
+      if (!el) {
+        el = document.createElement('div');
+        el.id = id;
+        el.className = 'php-email-toast';
+        document.body.appendChild(el);
+      }
+      el.innerText = message;
+      el.classList.add('show');
+      // remove after 6 seconds
+      setTimeout(function() {
+        el.classList.remove('show');
+      }, 6000);
+    } catch (e) {
+      // fallback: show sent-message inline
+      var formsent = document.querySelectorAll('.php-email-form .sent-message');
+      if (formsent && formsent.length) {
+        formsent.forEach(function(fs) {
+          fs.innerHTML = message;
+          fs.classList.add('d-block');
+        });
+      }
+    }
   }
 
 })();
