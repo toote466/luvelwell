@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  sftp-deploy:
+  ftp-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -21,6 +21,7 @@ jobs:
           protocol: ftp
           local-dir: ./
           server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
+          log-level: verbose
 
       # Note: Create the following repository secrets in GitHub: FTP_HOST, FTP_USERNAME, FTP_PASSWORD
       # Optional: FTP_PORT, FTP_SERVER_DIR
