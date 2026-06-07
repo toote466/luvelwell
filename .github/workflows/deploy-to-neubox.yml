@@ -11,17 +11,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy via SFTP (scp)
-        uses: appleboy/scp-action@v0.1.6
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          host: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          port: ${{ secrets.SFTP_PORT || '22' }}
-          source: "./"
-          target: ${{ secrets.SFTP_TARGET || '.' }}
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR || '.' }}
+          local-dir: ./
+          port: ${{ secrets.FTP_PORT || '21' }}
+          git-ftp-args: --verbose
 
-      # Note: Create the following repository secrets in GitHub: SFTP_HOST, SFTP_USERNAME, SFTP_PASSWORD
-      # Optional: SFTP_PORT, SFTP_TARGET
-      # If Neubox no te indica una carpeta remota, usa "." para subir a tu home.
-      # Si tu sitio se publica en public_html, guarda ese valor en SFTP_TARGET.
+      # Note: Create the following repository secrets in GitHub: FTP_HOST, FTP_USERNAME, FTP_PASSWORD
+      # Optional: FTP_PORT, FTP_SERVER_DIR
+      # Use the FTP host/port provided por Neubox, normalmente puerto 21.
+      # Si Neubox usa public_html, ponlo en FTP_SERVER_DIR.
+      # Si subes al home del usuario, deja FTP_SERVER_DIR vacío o pon ".".
