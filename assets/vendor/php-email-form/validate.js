@@ -14,6 +14,15 @@
 
       let thisForm = this;
 
+      // Ensure any previously shown toast is removed from the DOM before sending
+      try {
+        var existingToast = document.getElementById('php-email-toast');
+        if (existingToast) {
+          if (existingToast.remove) existingToast.remove();
+          else if (existingToast.parentNode) existingToast.parentNode.removeChild(existingToast);
+        }
+      } catch (e) {}
+
       let action = thisForm.getAttribute('action');
       let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
       

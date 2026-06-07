@@ -296,6 +296,11 @@ height: auto;
   }
 }
 
+/* Hide sent message globally to prevent pre-send display */
+.sent-message {
+  display: none !important;
+}
+
 /* PHP Email Form Success Toast/Banner */
 .php-email-toast {
   position: fixed;
