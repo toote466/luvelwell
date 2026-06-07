@@ -1,0 +1,24 @@
+name: Deploy to Neubox (SFTP)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  sftp-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy via SFTP (scp)
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT }}
+          source: "./"
+          target: ${{ secrets.SFTP_TARGET }}
+
+      # Note: Create the following repository secrets in GitHub: SFTP_HOST, SFTP_USERNAME, SFTP_PASSWORD, SFTP_TARGET (optional: SFTP_PORT)
