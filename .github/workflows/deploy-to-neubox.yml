@@ -17,8 +17,11 @@ jobs:
           host: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
-          port: ${{ secrets.SFTP_PORT }}
+          port: ${{ secrets.SFTP_PORT || '22' }}
           source: "./"
-          target: ${{ secrets.SFTP_TARGET }}
+          target: ${{ secrets.SFTP_TARGET || '.' }}
 
-      # Note: Create the following repository secrets in GitHub: SFTP_HOST, SFTP_USERNAME, SFTP_PASSWORD, SFTP_TARGET (optional: SFTP_PORT)
+      # Note: Create the following repository secrets in GitHub: SFTP_HOST, SFTP_USERNAME, SFTP_PASSWORD
+      # Optional: SFTP_PORT, SFTP_TARGET
+      # If Neubox no te indica una carpeta remota, usa "." para subir a tu home.
+      # Si tu sitio se publica en public_html, guarda ese valor en SFTP_TARGET.
