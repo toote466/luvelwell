@@ -17,13 +17,13 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR || '.' }}
-          local-dir: ./
           port: ${{ secrets.FTP_PORT || '21' }}
-          git-ftp-args: --verbose
+          protocol: ftp
+          local-dir: ./
+          server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
 
       # Note: Create the following repository secrets in GitHub: FTP_HOST, FTP_USERNAME, FTP_PASSWORD
       # Optional: FTP_PORT, FTP_SERVER_DIR
       # Use the FTP host/port provided por Neubox, normalmente puerto 21.
-      # Si Neubox usa public_html, ponlo en FTP_SERVER_DIR.
-      # Si subes al home del usuario, deja FTP_SERVER_DIR vacío o pon ".".
+      # Si Neubox usa public_html, ponlo en FTP_SERVER_DIR con valor "public_html/".
+      # Si quieres subir a tu home, deja FTP_SERVER_DIR vacío o pon "./".
