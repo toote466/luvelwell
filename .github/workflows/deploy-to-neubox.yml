@@ -18,12 +18,14 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || '21' }}
-          protocol: ftp
+          protocol: ftps
+          security: loose
           local-dir: ./
-          server-dir: ${{ secrets.FTP_SERVER_DIR || './home/donatofi' }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
           log-level: verbose
 
       # Note: Create the following repository secrets in GitHub: FTP_HOST, FTP_USERNAME, FTP_PASSWORD
       # Optional: FTP_PORT, FTP_SERVER_DIR
-      # This workflow now forces plain FTP.
-      # Use public_html/ in FTP_SERVER_DIR if your web root requires it, or ./ for the home folder.
+      # Neubox explicit FTPS on port 21 should work with protocol: ftps.
+      # If your web root is under a specific folder, set FTP_SERVER_DIR accordingly.
+      # Otherwise use ./ to deploy to your FTP home.
