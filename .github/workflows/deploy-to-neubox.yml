@@ -20,7 +20,7 @@ jobs:
           port: ${{ secrets.FTP_PORT || '21' }}
           protocol: ftp
           local-dir: ./
-          server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR || './home/donatofi' }}
           log-level: verbose
 
       # Note: Create the following repository secrets in GitHub: FTP_HOST, FTP_USERNAME, FTP_PASSWORD
