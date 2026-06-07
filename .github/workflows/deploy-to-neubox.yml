@@ -25,6 +25,5 @@ jobs:
 
       # Note: Create the following repository secrets in GitHub: FTP_HOST, FTP_USERNAME, FTP_PASSWORD
       # Optional: FTP_PORT, FTP_SERVER_DIR
-      # Use the FTP host/port provided por Neubox, normalmente puerto 21.
-      # Si Neubox usa public_html, ponlo en FTP_SERVER_DIR con valor "public_html/".
-      # Si quieres subir a tu home, deja FTP_SERVER_DIR vacío o pon "./".
+      # This workflow now forces plain FTP.
+      # Use public_html/ in FTP_SERVER_DIR if your web root requires it, or ./ for the home folder.
