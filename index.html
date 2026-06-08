@@ -593,16 +593,7 @@
         submitBtn.disabled = false;
 
         if (result.ok && result.data && result.data.success) {
-          // Éxito: mostrar SweetAlert2 y limpiar formulario
-          if (typeof Swal !== 'undefined') {
-            Swal.fire({
-              icon: 'success',
-              title: '¡Tu mensaje ha sido enviado correctamente!',
-              text: 'Pronto nos contactaremos contigo.',
-              timer: 3000,
-              showConfirmButton: false
-            });
-          }
+          // Success: reset the form silently
           form.reset();
         } else {
           // Mostrar mensaje de error

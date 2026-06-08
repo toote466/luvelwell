@@ -94,23 +94,7 @@
       }
 
       if (isSuccess) {
-        // Prefer SweetAlert2 if available
-        try {
-          if (typeof Swal !== 'undefined') {
-            Swal.fire({
-              icon: 'success',
-              title: '¡Tu mensaje ha sido enviado correctamente!',
-              text: 'Pronto nos contactaremos contigo.',
-              timer: 3000,
-              showConfirmButton: false
-            });
-          } else {
-            showSuccessBanner('¡Tu mensaje ha sido enviado correctamente! Pronto nos contactaremos contigo.');
-          }
-        } catch (e) {
-          showSuccessBanner('¡Tu mensaje ha sido enviado correctamente! Pronto nos contactaremos contigo.');
-        }
-
+        // Success: just reset the form silently
         thisForm.reset();
       } else {
         throw new Error(text ? text : 'Form submission failed and no error message returned from: ' + action);
