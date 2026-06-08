@@ -307,6 +307,14 @@ height: auto;
   display: none !important;
 }
 
+/* Also hide any standalone loading/sent-message elements to ensure they don't appear */
+.loading,
+.sent-message,
+.php-email-form .loading,
+.php-email-form .sent-message {
+  display: none !important;
+}
+
 /* PHP Email Form Success Toast/Banner */
 .php-email-toast {
   position: fixed;
