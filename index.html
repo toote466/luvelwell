@@ -594,6 +594,13 @@
 
         if (result.ok && result.data && result.data.success) {
           // Success: reset the form silently
+           Swal.fire({
+              icon: 'success',
+              title: '¡Tu mensaje ha sido enviado correctamente!',
+              text: 'Pronto nos contactaremos contigo.',
+              timer: 3000,
+              showConfirmButton: false
+            });
           form.reset();
         } else {
           // Mostrar mensaje de error
