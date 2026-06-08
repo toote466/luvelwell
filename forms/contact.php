@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Enviar el email
     if (mail($receiving_email_address, $email_subject, $email_body, $headers)) {
         http_response_code(200);
-        echo json_encode(['message' => '¡Mensaje enviado correctamente! Pronto nos contactaremos contigo.']);
+        echo json_encode(['success' => true]);
     } else {
         http_response_code(500);
         echo json_encode(['message' => 'Error al enviar el mensaje. Por favor intenta más tarde.']);

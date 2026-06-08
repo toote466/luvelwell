@@ -301,6 +301,12 @@ height: auto;
   display: none !important;
 }
 
+/* Hide loading and sent message in contact forms (used on multiple pages) */
+.contact-form .loading,
+.contact-form .sent-message {
+  display: none !important;
+}
+
 /* PHP Email Form Success Toast/Banner */
 .php-email-toast {
   position: fixed;

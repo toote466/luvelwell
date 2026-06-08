@@ -29,9 +29,12 @@
       if( ! action ) {
         return;
       }
-      thisForm.querySelector('.loading').classList.add('d-block');
-      thisForm.querySelector('.error-message').classList.remove('d-block');
-      thisForm.querySelector('.sent-message').classList.remove('d-block');
+      var loadingEl = thisForm.querySelector('.loading');
+      var errorEl = thisForm.querySelector('.error-message');
+      var sentEl = thisForm.querySelector('.sent-message');
+      if (loadingEl) loadingEl.classList.add('d-block');
+      if (errorEl) errorEl.classList.remove('d-block');
+      if (sentEl) sentEl.classList.remove('d-block');
 
       let formData = new FormData( thisForm );
 
@@ -68,20 +71,49 @@
       if( response.ok ) {
         return response.text();
       } else {
-        throw new Error(`${response.status} ${response.statusText} ${response.url}`); 
+        throw new Error(`${response.status} ${response.statusText} ${response.url}`);
       }
     })
-    .then(data => {
-      thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data.trim() == 'OK') {
-        var sent = thisForm.querySelector('.sent-message');
-        if (sent) {
-          sent.classList.remove('d-block');
+    .then(text => {
+      var loadingEl = thisForm.querySelector('.loading');
+      if (loadingEl) loadingEl.classList.remove('d-block');
+
+      // Try to parse JSON response (our PHP may return JSON), otherwise treat as plain text
+      var parsed = null;
+      try {
+        parsed = JSON.parse(text);
+      } catch (e) {
+        parsed = null;
+      }
+
+      var isSuccess = false;
+      if (parsed && parsed.success) {
+        isSuccess = true;
+      } else if (typeof text === 'string' && text.trim() == 'OK') {
+        isSuccess = true;
+      }
+
+      if (isSuccess) {
+        // Prefer SweetAlert2 if available
+        try {
+          if (typeof Swal !== 'undefined') {
+            Swal.fire({
+              icon: 'success',
+              title: '¡Tu mensaje ha sido enviado correctamente!',
+              text: 'Pronto nos contactaremos contigo.',
+              timer: 3000,
+              showConfirmButton: false
+            });
+          } else {
+            showSuccessBanner('¡Tu mensaje ha sido enviado correctamente! Pronto nos contactaremos contigo.');
+          }
+        } catch (e) {
+          showSuccessBanner('¡Tu mensaje ha sido enviado correctamente! Pronto nos contactaremos contigo.');
         }
-        showSuccessBanner('¡Tu mensaje ha sido enviado correctamente! Pronto nos contactaremos contigo.');
-        thisForm.reset(); 
+
+        thisForm.reset();
       } else {
-        throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
+        throw new Error(text ? text : 'Form submission failed and no error message returned from: ' + action);
       }
     })
     .catch((error) => {
@@ -90,7 +122,8 @@
   }
 
   function displayError(thisForm, error) {
-    thisForm.querySelector('.loading').classList.remove('d-block');
+    var loadingEl = thisForm.querySelector('.loading');
+    if (loadingEl) loadingEl.classList.remove('d-block');
     // Hide the specific "form action" message if present, otherwise show the error
     var message = '';
     try {
